@@ -1,0 +1,99 @@
+Uber_Ride_Analysis:
+
+#import libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+#load dataset
+df = pd.read_csv("uber_data.csv")
+df.head()
+df.shape
+df.info()
+df.describe()
+df.isnull().sum()
+df.drop_duplicates(inplace=True)
+df['Date'] = pd.to_datetime(df['Date'])
+df['Hour'] = df['Date'].dt.hour
+df['Hour'].value_counts().sort_index()
+df['Date'].dt.day_name().value_counts()
+plt.figure(figsize=(8,5))
+sns.countplot(x='Hour', data=df)
+plt.title("Ride Demand by Hour")
+plt.show()
+plt.figure(figsize=(7,5))
+df['Date'].dt.day_name().value_counts().plot(kind='bar')
+plt.title("Weekly Ride Demand")
+plt.show()
+sns.heatmap(df.corr(), annot=True)
+plt.show()
+
+INSIGHTS:
+
+1. Peak ride demand occurs during morning and evening hours.
+2. Weekdays have higher ride bookings compared to weekends.
+3. Certain hours show consistent high demand patterns.
+4. Data cleaning improved data quality and analysis accuracy.
+
+
+GOOGLE EXPENSE SHARING:
+
+def calculate_balances(expenses):
+    balances = {}
+
+    for person, amount in expenses:
+        if person in balances:
+            balances[person] += amount
+        else:
+            balances[person] = amount
+
+    return balances
+
+
+def split_expense(balances):
+    total = sum(balances.values())
+    people_count = len(balances)
+    split_amount = total / people_count
+
+    settlement = {}
+
+    for person in balances:
+        settlement[person] = round(balances[person] - split_amount, 2)
+
+    return settlement
+
+
+# -------- MAIN PROGRAM --------
+
+n = int(input("Enter number of transactions: "))
+
+expenses = []
+
+for i in range(n):
+    name = input("Enter person name: ")
+    amount = float(input("Enter amount paid: "))
+    expenses.append((name, amount))
+
+
+balances = calculate_balances(expenses)
+settlement = split_expense(balances)
+
+print("\n--- Expense Summary ---")
+print("Total Expense:", sum(balances.values()))
+
+print("\n--- Individual Balances ---")
+for person, amount in balances.items():
+    print(person, "paid", amount)
+
+print("\n--- Settlement Amount ---")
+for person, amount in settlement.items():
+    if amount > 0:
+        print(person, "should receive", amount)
+    elif amount < 0:
+        print(person, "should pay", abs(amount))
+    else:
+        print(person, "is settled")
+
+
+
