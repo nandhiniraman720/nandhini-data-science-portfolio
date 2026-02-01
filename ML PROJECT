@@ -1,0 +1,55 @@
+STUDENT PERFORMANCE PREDICTION:
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+df = pd.read_csv("student_data.csv")
+df
+df['average'] = (df['math_score'] + df['reading_score'] + df['writing_score']) / 3
+
+df['result'] = df['average'].apply(lambda x: 1 if x >= 50 else 0)
+
+df
+X = df[['math_score','reading_score','writing_score']]
+y = df['result']
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+model = LogisticRegression()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+y_pred
+accuracy = accuracy_score(y_test, y_pred)
+accuracy
+confusion_matrix(y_test, y_pred)
+print(classification_report(y_test, y_pred))
+
+OUTPUT:Accuracy: 0.9
+
+
+SUMMARY:
+# Student Performance Prediction Using Machine Learning 
+
+## Overview
+This project predicts whether a student will pass or fail using machine learning classification.
+
+## Dataset
+Student exam scores dataset with math, reading and writing marks.
+
+## Algorithm Used
+- Logistic Regression
+
+## Steps Performed
+- Data preprocessing
+- Feature selection
+- Model training
+- Prediction
+- Accuracy evaluation
+
+## Result
+Achieved high prediction accuracy and reliable performance.
+
+## Real World Application
+Can help schools and colleges identify low performing students and provide early support.
+
