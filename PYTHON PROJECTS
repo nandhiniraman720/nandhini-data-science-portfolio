@@ -1,0 +1,51 @@
+1) prime_number_checker
+n = int(input("Enter number: "))
+
+if n <= 1:
+    print("Not Prime")
+else:
+    for i in range(2, int(n**0.5)+1):
+        if n % i == 0:
+            print("Not Prime")
+            break
+    else:
+        print("Prime")
+
+2)palindrome_checker
+s = input("Enter string: ")
+
+if s == s[::-1]:
+    print("Palindrome")
+else:
+    print("Not Palindrome")
+
+3)vowel_checker
+s = input("Enter string: ")
+
+vowels = "aeiouAEIOU"
+
+for ch in s:
+    if ch in vowels:
+        print("Yes")
+        break
+else:
+    print("No")
+
+4)next_power_of_2
+n = int(input("Enter number: "))
+
+power = 1
+
+while power <= n:
+    power *= 2
+
+print(power)
+
+
+5)multiple_of_7
+n = int(input("Enter number: "))
+
+if n % 7 == 0:
+    print("Yes")
+else:
+    print("No")
